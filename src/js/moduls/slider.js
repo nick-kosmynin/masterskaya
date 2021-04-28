@@ -1,8 +1,7 @@
-window.addEventListener('DOMContentLoaded', () => {
-
+const slider = () => {
     //   СОЗДАНИЕ СЛАЙДЕРА
 
-    
+
     // создаем селектор отображающий слайды, указать в какую сторону движется слайдер, кнопки prev & next
 
     let SlideIndex = 1, // переменная, отвечающая за показ текущ слайда польз 
@@ -46,4 +45,5 @@ window.addEventListener('DOMContentLoaded', () => {
         items[SlideIndex - 1].classList.remove('slideInRight');
         items[SlideIndex - 1].classList.add('slideInLeft');
     });
-});
+};
+export default slider;

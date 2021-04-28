@@ -1,7 +1,6 @@
 {
   "name": "picture",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -21,7 +20,11 @@
     "browser-sync": "^2.26.7",
     "core-js": "^3.4.2",
     "gulp": "^4.0.2",
-    "webpack": "^4.41.2",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^4.6.0",
     "webpack-stream": "^5.2.1"
-  }
+  },
+  "dependencies": {},
+  "keywords": [],
+  "description": ""
 }
