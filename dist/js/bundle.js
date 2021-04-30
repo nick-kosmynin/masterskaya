@@ -95,30 +95,44 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-const modal = () => {
+const modal = (btnOpenSelector, modalSekector, btnCloseSelector, destroy = false) => {
+
+    let btnPressed = false; // переменная, кот следит нажата хоть какая то кнопка или нет
+
     // modal windows
 
-    const modalTrigger = document.querySelectorAll('.button-design'),
-        modal = document.querySelector('.popup-design'),
-        modalCloseBtn = document.querySelector('[data-close]');
+    const modalTrigger = document.querySelectorAll(btnOpenSelector),
+        modal = document.querySelector(modalSekector),
+        modalCloseBtn = document.querySelector(btnCloseSelector);
 
 
-    modalTrigger.forEach(item => {
+    modalTrigger.forEach(item => { // УДАЛЕНИЕ ПОДАРКА
         item.addEventListener('click', () => {
-            modal.classList.add('show');
-            modal.classList.remove('hide');
+            if (destroy) {
+                item.remove();
+            }
         });
     });
 
-    function closeModal() {
+    btnPressed = true;
+
+    modalTrigger.forEach(item => { // ОТКРЫТИЕ ОКНА
+        item.addEventListener('click', () => {
+            modal.classList.add('show');
+            modal.classList.remove('hide');
+            modal.classList.add('animated', 'fadeIn');
+        });
+
+
+
+    });
+
+    function closeModal() { // ЗАКРЫТИЕ ОКНА
         modalCloseBtn.addEventListener('click', () => {
             modal.classList.add('hide');
             modal.classList.remove('show');
         });
-
-
     }
-
     closeModal();
 
     modal.addEventListener('click', (e) => {
@@ -127,6 +141,40 @@ const modal = () => {
             modal.classList.remove('show');
         }
     });
+
+    function showModalTime(selector, time) { //функция показа модального окна через 6 сек
+        setTimeout(function () {
+            let display;
+
+            document.querySelectorAll('[data-modal]').forEach(item => {
+                if (getComputedStyle(item).display !== 'none') {
+                    display = "block"; // переменная
+                } // если модальное окно будет показано пользователю, то мод окна перезаписываются в то же значение
+            });
+
+            if (!display) {
+                document.querySelector(selector).style.display = 'block';
+                // document.body.style.overflow = "hidden";
+            } // если не одно мод окно не показано то  poup-consultation
+
+
+        }, time);
+    }
+
+    
+
+    function openByScroll(selector) {
+        modal.addEventListener('scroll', () => {
+            if (!btnPressed && (modal.pageYOffset + document.documentElement.clientHeight >= 
+                document.documentElement.scrollHeight)) {
+                document.querySelector(selector).click();
+            }
+        });
+    }
+
+    openByScroll('.fixed-gift');
+
+    //showModalTime('.popup-consultation', 6000);
 };
 /* harmony default export */ __webpack_exports__["default"] = (modal);
 
@@ -141,20 +189,20 @@ const modal = () => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-const slider = () => {
+const slider = (sliders, dir, prev, next) => {
     //   СОЗДАНИЕ СЛАЙДЕРА
 
 
     // создаем селектор отображающий слайды, указать в какую сторону движется слайдер, кнопки prev & next
 
-    let SlideIndex = 1, // переменная, отвечающая за показ текущ слайда польз 
-        items = document.querySelectorAll('.feedback-slider-item'),
-        prevBtn = document.querySelector('.main-prev-btn'),
-        nextBtn = document.querySelector('.main-next-btn');
+    let SlideIndex = 1, // переменная, отвечающая за показ текущ слайда польз
+        paused = false;
+    const items = document.querySelectorAll(sliders);
 
-    // cоздаем функцию отвечающую за перемещ индекса и слайда
 
-    function showSlides(n) {
+
+
+    function showSlides(n) { // cоздаем функцию отвечающую за перемещ индекса и слайда
         if (n > items.length) {
             SlideIndex = 1;
         }
@@ -177,17 +225,52 @@ const slider = () => {
         showSlides(SlideIndex += n);
     }
 
-    prevBtn.addEventListener('click', () => {
-        plusSlides(-1);
-        items[SlideIndex - 1].classList.remove('slideInLeft');
-        items[SlideIndex - 1].classList.add('slideInRight');
+    try {
+        const prevBtn = document.querySelector(prev),
+            nextBtn = document.querySelector(next);
+
+        prevBtn.addEventListener('click', () => {
+            plusSlides(-1);
+            items[SlideIndex - 1].classList.remove('slideInLeft');
+            items[SlideIndex - 1].classList.add('slideInRight');
+        });
+
+        nextBtn.addEventListener('click', () => {
+            plusSlides(1);
+            items[SlideIndex - 1].classList.remove('slideInRight');
+            items[SlideIndex - 1].classList.add('slideInLeft');
+        });
+
+    } catch (e) {}
+
+
+    function activateAnimation() {
+        if (dir === 'vertical') {
+         paused=   setInterval(function () {
+                plusSlides(1);
+                items[SlideIndex - 1].classList.add('slideInDown');
+            }, 3000);
+        } else {
+          paused=  setInterval(function () {
+                plusSlides(1);
+                items[SlideIndex - 1].classList.remove('slideInRight');
+                items[SlideIndex - 1].classList.add('slideInLeft');
+            }, 3000);
+        }
+    }
+    activateAnimation();
+    
+
+
+    items[0].parentNode.addEventListener('mouseenter', () => {
+        clearInterval(paused);
     });
 
-    nextBtn.addEventListener('click', () => {
-        plusSlides(1);
-        items[SlideIndex - 1].classList.remove('slideInRight');
-        items[SlideIndex - 1].classList.add('slideInLeft');
+    items[0].parentNode.addEventListener('mouseleave', () => {
+        activateAnimation();
     });
+
+
 };
 /* harmony default export */ __webpack_exports__["default"] = (slider);
 
@@ -214,9 +297,13 @@ __webpack_require__.r(__webpack_exports__);
 
 window.addEventListener('DOMContentLoaded', () => {
 
-  Object(_moduls_slider__WEBPACK_IMPORTED_MODULE_1__["default"])();
-  Object(_moduls_modal__WEBPACK_IMPORTED_MODULE_0__["default"])();
-  
+  Object(_moduls_slider__WEBPACK_IMPORTED_MODULE_1__["default"])('.feedback-slider-item', 'horizontal', '.main-prev-btn', '.main-next-btn');
+  Object(_moduls_slider__WEBPACK_IMPORTED_MODULE_1__["default"])('.main-slider-item', 'vertical');
+
+
+  Object(_moduls_modal__WEBPACK_IMPORTED_MODULE_0__["default"])('.button-design', '.popup-design', '.popup-design .popup-close',);
+  Object(_moduls_modal__WEBPACK_IMPORTED_MODULE_0__["default"])('.button-consultation', '.popup-consultation', '.popup-close',);
+  Object(_moduls_modal__WEBPACK_IMPORTED_MODULE_0__["default"])('.fixed-gift', '.popup-gift', '[data-close]', true);
   
 
 
