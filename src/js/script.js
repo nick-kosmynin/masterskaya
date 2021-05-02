@@ -2,6 +2,7 @@
 import modal from './moduls/modal';
 import slider from './moduls/slider';
 import calc from './moduls/calc';
+import filter from './moduls/filter';
 
 
 
@@ -18,7 +19,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
   calc('#size', '#material', '#options', '.promocode', '.calc-price');
   
+ filter();
 
+ 
 
 
 
