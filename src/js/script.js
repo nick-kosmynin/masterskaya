@@ -1,7 +1,7 @@
 
 import modal from './moduls/modal';
 import slider from './moduls/slider';
-
+import calc from './moduls/calc';
 
 
 
@@ -15,6 +15,8 @@ window.addEventListener('DOMContentLoaded', () => {
   modal('.button-design', '.popup-design', '.popup-design .popup-close',);
   modal('.button-consultation', '.popup-consultation', '.popup-close',);
   modal('.fixed-gift', '.popup-gift', '[data-close]', true);
+
+  calc('#size', '#material', '#options', '.promocode', '.calc-price');
   
 
 
