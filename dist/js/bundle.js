@@ -86,6 +86,78 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/js/moduls/accordeon.js":
+/*!************************************!*\
+  !*** ./src/js/moduls/accordeon.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const accordeon = (triggersSelector, itemsSelector) => {
+
+   const btns = document.querySelectorAll(triggersSelector),
+         blocks = document.querySelectorAll(itemsSelector); 
+   
+   
+blocks.forEach(block => {
+    block.classList.add('animated', 'fadeInDown');
+});
+
+btns.forEach(btn => {
+    btn.addEventListener('click', function(){
+        if (!this.classList.contains('active')) {
+            btns.forEach(btn =>{
+                btn.classList.remove('active', 'active-style');
+            });
+            this.classList.add('active', 'active-style');
+        }
+    });
+});
+
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (accordeon);
+
+/***/ }),
+
+/***/ "./src/js/moduls/burger.js":
+/*!*********************************!*\
+  !*** ./src/js/moduls/burger.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const burger = (menuSelector, burgerSelector) => {
+
+    const menuElement = document.querySelector(menuSelector),
+          burgerElem = document.querySelector(burgerSelector);
+
+    menuElement.style.display = 'none';
+
+    burgerElem.addEventListener('click', ()=>{
+        if (menuElement.style.display == 'none' && window.screen.availWidth <993){
+            menuElement.style.display = 'block';
+        }else{
+            menuElement.style.display = 'none';
+        }
+    });
+
+    window.addEventListener('resize', ()=>{
+        if (window.screen.availWidth > 992) {
+            menuElement.style.display = 'none';
+        }
+    });
+
+
+};
+/* harmony default export */ __webpack_exports__["default"] = (burger);
+
+/***/ }),
+
 /***/ "./src/js/moduls/calc.js":
 /*!*******************************!*\
   !*** ./src/js/moduls/calc.js ***!
@@ -315,6 +387,50 @@ const modal = (btnOpenSelector, modalSekector, btnCloseSelector, destroy = false
 
 /***/ }),
 
+/***/ "./src/js/moduls/picture.js":
+/*!**********************************!*\
+  !*** ./src/js/moduls/picture.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const picture = (imgSelector) =>{  //селектор по кот передаются размеры изображений
+   const blocks = document.querySelectorAll(imgSelector);
+
+   function showImg (block) {
+      const img = block.querySelector('img');
+      //something.png => something-1.png
+      img.src = img.src.slice(0,-4) + '-1.png';
+      block.querySelectorAll('p:not(.sizes-hit)').forEach(p => {
+         p.style.display = 'none';
+      });
+   }
+
+   function hideImg (block) {
+      const img = block.querySelector('img');
+      //something-1.png=> something.png
+      img.src = img.src.slice(0,-6) + '.png';
+      block.querySelectorAll('p:not(.sizes-hit)').forEach(p => {
+         p.style.display = 'block';
+      });
+   }
+
+   blocks.forEach(block => {
+      block.addEventListener('mouseover', () =>{
+         showImg(block);
+      });
+
+      block.addEventListener('mouseout', () =>{
+         hideImg(block);
+      });
+   });
+};
+/* harmony default export */ __webpack_exports__["default"] = (picture);
+
+/***/ }),
+
 /***/ "./src/js/moduls/slider.js":
 /*!*********************************!*\
   !*** ./src/js/moduls/slider.js ***!
@@ -424,6 +540,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _moduls_slider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./moduls/slider */ "./src/js/moduls/slider.js");
 /* harmony import */ var _moduls_calc__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./moduls/calc */ "./src/js/moduls/calc.js");
 /* harmony import */ var _moduls_filter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./moduls/filter */ "./src/js/moduls/filter.js");
+/* harmony import */ var _moduls_picture__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./moduls/picture */ "./src/js/moduls/picture.js");
+/* harmony import */ var _moduls_burger__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./moduls/burger */ "./src/js/moduls/burger.js");
+/* harmony import */ var _moduls_accordeon__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./moduls/accordeon */ "./src/js/moduls/accordeon.js");
+
+
 
 
 
@@ -447,9 +568,11 @@ window.addEventListener('DOMContentLoaded', () => {
   
  Object(_moduls_filter__WEBPACK_IMPORTED_MODULE_3__["default"])();
 
- 
+ Object(_moduls_picture__WEBPACK_IMPORTED_MODULE_4__["default"])('.sizes-block');
 
+ Object(_moduls_burger__WEBPACK_IMPORTED_MODULE_5__["default"])('.burger-menu', '.burger');
 
+ Object(_moduls_accordeon__WEBPACK_IMPORTED_MODULE_6__["default"])('.accordion-heading', '.accordion-block');
 
 
 });

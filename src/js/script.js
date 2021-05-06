@@ -3,7 +3,9 @@ import modal from './moduls/modal';
 import slider from './moduls/slider';
 import calc from './moduls/calc';
 import filter from './moduls/filter';
-
+import picture from './moduls/picture';
+import burger from './moduls/burger';
+import accordeon from './moduls/accordeon';
 
 
 
@@ -21,9 +23,11 @@ window.addEventListener('DOMContentLoaded', () => {
   
  filter();
 
- 
+ picture('.sizes-block');
 
+ burger('.burger-menu', '.burger');
 
+ accordeon('.accordion-heading', '.accordion-block');
 
 
 });
