@@ -95,27 +95,41 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-const accordeon = (triggersSelector, itemsSelector) => {
+const accordeon = () => {
 
-   const btns = document.querySelectorAll(triggersSelector),
-         blocks = document.querySelectorAll(itemsSelector); 
-   
-   
-blocks.forEach(block => {
-    block.classList.add('animated', 'fadeInDown');
-});
+    const btns = document.querySelectorAll('.accordion-heading'),
+        blocks = document.querySelectorAll('.accordion-block');
 
-btns.forEach(btn => {
-    btn.addEventListener('click', function(){
-        if (!this.classList.contains('active')) {
-            btns.forEach(btn =>{
-                btn.classList.remove('active', 'active-style');
-            });
-            this.classList.add('active', 'active-style');
-        }
-    });
-});
 
+
+
+       blocks.forEach(block => {
+          // block.classList.add('animated', 'fadeInDown');
+       });
+     
+       btns.forEach(btn => {
+           btn.addEventListener('click', function () {
+               if (!this.classList.contains('active')) {
+                   btns.forEach(btn => {
+                       btn.classList.remove('active', 'active-style');
+                   });
+                   this.classList.add('active', 'active-style');
+               }
+           });
+       });
+
+   //  btns.forEach(btn => {
+   //     btn.addEventListener('click', function() {
+   //         this.classList.toggle('active-style');
+   //         this.nextElementSibling.classList.toggle('active-content');
+//
+   //         if (this.classList.contains('active-style')) {
+   //             this.nextElementSibling.style.maxHeight = this.nextElementSibling.scrollHeight + 80 + "px";
+   //         } else {
+   //             this.nextElementSibling.style.maxHeight = '0px';
+   //         }
+   //     });
+   // });
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (accordeon);
@@ -572,7 +586,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
  Object(_moduls_burger__WEBPACK_IMPORTED_MODULE_5__["default"])('.burger-menu', '.burger');
 
- Object(_moduls_accordeon__WEBPACK_IMPORTED_MODULE_6__["default"])('.accordion-heading', '.accordion-block');
+ Object(_moduls_accordeon__WEBPACK_IMPORTED_MODULE_6__["default"])();
 
 
 });

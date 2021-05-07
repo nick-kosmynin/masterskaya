@@ -27,7 +27,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
  burger('.burger-menu', '.burger');
 
- accordeon('.accordion-heading', '.accordion-block');
+ accordeon();
 
 
 });
